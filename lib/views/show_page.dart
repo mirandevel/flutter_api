@@ -10,12 +10,12 @@ class ShowPage extends StatefulWidget {
 }
 
 class ShowPageState extends State<ShowPage> {
-  MyDatabase _myDatabase = MyDatabase();
+  //MyDatabase _myDatabase = MyDatabase();
   Future<List<Person>> _people;
   @override
   void initState() {
-    _myDatabase.initialize().then((value) => 'database intialize');
-    _people = _myDatabase.getPeople();
+    // _myDatabase.initialize().then((value) => 'database intialize');
+    //_people = _myDatabase.getPeople();
     super.initState();
   }
 

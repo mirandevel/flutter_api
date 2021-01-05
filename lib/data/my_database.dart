@@ -4,7 +4,7 @@ import 'package:register_sqlite/models/person.dart';
 import 'package:sqflite/sqflite.dart';
 
 class MyDatabase {
-  static Database _database;
+  /*static Database _database;
   static MyDatabase _myDB;
   MyDatabase._createInstance();
   factory MyDatabase() {
@@ -48,5 +48,5 @@ class MyDatabase {
       people.add(person);
     });
     return people;
-  }
+  }*/
 }

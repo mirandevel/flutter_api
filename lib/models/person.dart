@@ -1,20 +1,31 @@
 class Person {
-  final int id;
   final String name;
   final String direction;
   final int phone;
+  final String email;
+  final String password;
+  final String profile_photo_path;
 
-  Person({this.id, this.name, this.direction, this.phone});
+  Person(
+      {this.name,
+      this.direction,
+      this.phone,
+      this.email,
+      this.password,
+      this.profile_photo_path});
 
-  Map<String, dynamic> toMap() => {
-        'id': id,
+  Map<String, dynamic> toJson() => {
         'name': name,
         'direction': direction,
         'phone': phone,
+        'email': email,
+        'password': password,
+        'profile_photo_path': profile_photo_path,
       };
-  factory Person.fromMap(Map<String, dynamic> map) => Person(
-      id: map["id"],
+  factory Person.fromJson(Map<String, dynamic> map) => Person(
       name: map["name"],
       direction: map["direction"],
-      phone: map["phone"]);
+      phone: map["phone"],
+      email: map["email"],
+      profile_photo_path: map["profile_photo_path"]);
 }

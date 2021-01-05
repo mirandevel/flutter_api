@@ -4,50 +4,35 @@ import 'package:register_sqlite/data/my_database.dart';
 import 'package:register_sqlite/models/person.dart';
 import 'package:register_sqlite/views/show_page.dart';
 
-class RegisterPage extends StatefulWidget {
-  RegisterPage({Key key}) : super(key: key);
+import 'register_page.dart';
+
+class LoginPage extends StatefulWidget {
+  LoginPage({Key key}) : super(key: key);
 
   @override
-  State createState() => RegisterPageState();
+  State createState() => LoginPageState();
 }
 
-class RegisterPageState extends State<RegisterPage> {
+class LoginPageState extends State<LoginPage> {
   // MyDatabase _myDatabase = MyDatabase();
-  var name = "", direction = "", phone = 0, email = "", password = "";
+  var email = "", password = "";
 
-  final TextEditingController t1 = new TextEditingController(text: "");
-  final TextEditingController t2 = new TextEditingController(text: "");
-  final TextEditingController t3 = new TextEditingController(text: "");
   final TextEditingController t4 = new TextEditingController(text: "");
   final TextEditingController t5 = new TextEditingController(text: "");
 
   void save() async {
     setState(() {
-      name = t1.text;
-      direction = t2.text;
-      phone = int.parse(t3.text);
       email = t4.text;
       password = t5.text;
 
-      var person = Person(
-          name: name,
-          direction: direction,
-          phone: phone,
-          email: email,
-          password: password,
-          profile_photo_path:
-              'profile/F7blXRnxOArKymjvpeyCHh2SauBIJw0ioEYGbPtH.png');
       //_myDatabase.insertPerson(person);
       Api _api = new Api();
-      _api.insertPerson(person);
+      _api.login(email, password);
       clear();
     });
   }
 
   void clear() {
-    t1.text = "";
-    t2.text = "";
-    t3.text = "";
     t4.text = "";
     t5.text = "";
   }
@@ -71,44 +56,6 @@ class RegisterPageState extends State<RegisterPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Image.asset('assets/person.png'),
-              new TextField(
-                controller: t1,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  labelText: 'Name',
-                  contentPadding:
-                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue, width: 1.5),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey, width: 0.5),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              new TextField(
-                controller: t2,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  labelText: 'Direction',
-                  contentPadding:
-                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue, width: 1.5),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey, width: 0.5),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
               new TextField(
                 controller: t4,
                 decoration: InputDecoration(
@@ -147,30 +94,12 @@ class RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               SizedBox(height: 10),
-              new TextField(
-                controller: t3,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  labelText: 'Phone',
-                  contentPadding:
-                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue, width: 1.5),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey, width: 0.5),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-              ),
               SizedBox(height: 20),
               new MaterialButton(
                 height: 58,
                 minWidth: 200,
                 child: new Text(
-                  "Register",
+                  "Login",
                   style: TextStyle(
                     fontSize: 18,
                     color: Colors.black,
@@ -188,7 +117,7 @@ class RegisterPageState extends State<RegisterPage> {
                 height: 58,
                 minWidth: 200,
                 child: new Text(
-                  "Show all",
+                  "Register",
                   style: TextStyle(
                     fontSize: 18,
                     color: Colors.black,
@@ -201,7 +130,7 @@ class RegisterPageState extends State<RegisterPage> {
                 elevation: 10.0,
                 onPressed: () {
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => ShowPage()));
+                      MaterialPageRoute(builder: (context) => RegisterPage()));
                 },
               ),
             ],

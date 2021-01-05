@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:register_sqlite/views/login_page.dart';
 import 'package:register_sqlite/views/register_page.dart';
 
 void main() => runApp(new MyApp());
@@ -13,6 +14,6 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.blue,
           accentColor: Colors.blue[200],
         ),
-        home: new RegisterPage());
+        home: new LoginPage());
   }
 }
