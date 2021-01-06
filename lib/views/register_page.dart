@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:register_sqlite/data/api.dart';
-import 'package:register_sqlite/data/my_database.dart';
+
 import 'package:register_sqlite/models/person.dart';
-import 'package:register_sqlite/views/show_page.dart';
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key key}) : super(key: key);
@@ -14,12 +16,25 @@ class RegisterPage extends StatefulWidget {
 class RegisterPageState extends State<RegisterPage> {
   // MyDatabase _myDatabase = MyDatabase();
   var name = "", direction = "", phone = 0, email = "", password = "";
+  File _image;
+  final picker = ImagePicker();
 
   final TextEditingController t1 = new TextEditingController(text: "");
   final TextEditingController t2 = new TextEditingController(text: "");
   final TextEditingController t3 = new TextEditingController(text: "");
   final TextEditingController t4 = new TextEditingController(text: "");
   final TextEditingController t5 = new TextEditingController(text: "");
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
 
   void save() async {
     setState(() {
@@ -36,7 +51,7 @@ class RegisterPageState extends State<RegisterPage> {
           email: email,
           password: password,
           profile_photo_path:
-              'profile/F7blXRnxOArKymjvpeyCHh2SauBIJw0ioEYGbPtH.png');
+              'storage/F7blXRnxOArKymjvpeyCHh2SauBIJw0ioEYGbPtH.png');
       //_myDatabase.insertPerson(person);
       Api _api = new Api();
       _api.insertPerson(person);
@@ -70,7 +85,9 @@ class RegisterPageState extends State<RegisterPage> {
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image.asset('assets/person.png'),
+              SizedBox(height: 10),
+              _image == null ? Text('No image selected.') : Image.file(_image),
+              SizedBox(height: 20),
               new TextField(
                 controller: t1,
                 decoration: InputDecoration(
@@ -188,7 +205,7 @@ class RegisterPageState extends State<RegisterPage> {
                 height: 58,
                 minWidth: 200,
                 child: new Text(
-                  "Show all",
+                  "Image",
                   style: TextStyle(
                     fontSize: 18,
                     color: Colors.black,
@@ -199,11 +216,9 @@ class RegisterPageState extends State<RegisterPage> {
                     side: BorderSide(color: Colors.blue)),
                 color: Colors.white,
                 elevation: 10.0,
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => ShowPage()));
-                },
+                onPressed: getImage,
               ),
+              SizedBox(height: 20),
             ],
           ),
         ),

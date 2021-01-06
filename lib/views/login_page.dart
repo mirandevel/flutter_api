@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:register_sqlite/data/api.dart';
-import 'package:register_sqlite/data/my_database.dart';
 import 'package:register_sqlite/models/person.dart';
-import 'package:register_sqlite/views/show_page.dart';
+import 'package:register_sqlite/views/home_page.dart';
 
 import 'register_page.dart';
 
@@ -27,7 +26,9 @@ class LoginPageState extends State<LoginPage> {
 
       //_myDatabase.insertPerson(person);
       Api _api = new Api();
-      _api.login(email, password);
+      Future<bool> sw = _api.login(email, password);
+
+      sw.then((bool value) => home()).catchError((e) => 499);
       clear();
     });
   }
@@ -35,6 +36,11 @@ class LoginPageState extends State<LoginPage> {
   void clear() {
     t4.text = "";
     t5.text = "";
+  }
+
+  void home() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => HomePage()));
   }
 
   @override

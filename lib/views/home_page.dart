@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:register_sqlite/data/my_database.dart';
+import 'package:register_sqlite/data/api.dart';
+
 import 'package:register_sqlite/models/person.dart';
 
-class ShowPage extends StatefulWidget {
-  ShowPage({Key key}) : super(key: key);
+import 'register_page.dart';
+
+class HomePage extends StatefulWidget {
+  HomePage({Key key}) : super(key: key);
 
   @override
-  State createState() => ShowPageState();
+  State createState() => HomePageState();
 }
 
-class ShowPageState extends State<ShowPage> {
+class HomePageState extends State<HomePage> {
   //MyDatabase _myDatabase = MyDatabase();
   Future<List<Person>> _people;
   @override
   void initState() {
     // _myDatabase.initialize().then((value) => 'database intialize');
     //_people = _myDatabase.getPeople();
+    Api _api = new Api();
+    _people = _api.getPeople();
     super.initState();
   }
 
@@ -51,6 +56,12 @@ class ShowPageState extends State<ShowPage> {
                                   new Text(
                                       'Phone: ' +
                                           snapshot.data[index].phone.toString(),
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.grey[700])),
+                                  new Text(
+                                      'Email: ' +
+                                          snapshot.data[index].email.toString(),
                                       style: TextStyle(
                                           fontSize: 15,
                                           color: Colors.grey[700])),
